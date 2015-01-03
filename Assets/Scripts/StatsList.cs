@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 [System.Serializable]
 public class Stat {
 	public STAT_ENTRY m_Entry;
@@ -10,27 +11,28 @@ public class Stat {
 
 public class StatsList : MonoBehaviour {
 
-	public List<Stat> m_StatsList;
-	public Dictionary<STAT_ENTRY, int> m_TestHashTable;
+	// This is the List that is edited in Unity.  
+	// The Unity Editor doesn't play well with Dictionaries.
+	// This data is pushed into a Dictionary on Start and then cleared.
+	[SerializeField]
+	private List<Stat> m_InputList = new List<Stat>();
+
+	private Dictionary<STAT_ENTRY, int> m_Base = new Dictionary<STAT_ENTRY, int>();
 
 	// Use this for initialization
 	void Start () {
-		m_StatsList.Sort(delegate(Stat x, Stat y) {
-			if (x.m_Entry > y.m_Entry) return 1;
-			if (x.m_Entry < y.m_Entry) return -1;
-			return 0;
-		});
+		foreach (Stat stat in m_InputList) {
+			m_Base.Add( stat.m_Entry, stat.m_Value );
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
-}
 
-public enum STAT_ENTRY
-{
-	STAT_NONE = 0,
-	STAT_ATTACK,
-	STAT_LIFE,
+	int GetBaseValue ( STAT_ENTRY entry )
+	{
+		return m_Base[entry];
+	}
 }
