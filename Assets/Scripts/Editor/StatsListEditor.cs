@@ -16,7 +16,7 @@ public class StatDrawer : PropertyDrawer {
 	}
 }
 
-[CustomPropertyDrawer(typeof(StatsEntryData.PerStatEntryData))]
+[CustomPropertyDrawer(typeof(StatsEntryData.EntryData))]
 public class PerStatEntryDataDrawer : PropertyDrawer {
 	public override void OnGUI (Rect position, SerializedProperty property, GUIContent label) 
 	{
